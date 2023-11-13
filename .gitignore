@@ -3,6 +3,7 @@
 /*/
 
 # ... but these:
+!/Readme.org
 !/.gitignore
 !/waybar/
 !/hypr/
