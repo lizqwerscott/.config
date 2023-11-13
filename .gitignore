@@ -1,0 +1,11 @@
+# ignore everything
+/*
+/*/
+
+# ... but these:
+!/.gitignore
+!/waybar/
+!/hypr/
+!/rofi/
+!/elvish/
+!/ranger/
