@@ -60,3 +60,21 @@ fn f {
   var data = (fd --type directory | fzf)
   cd $data
 }
+
+fn ls {|@args|
+  exa $@args
+}
+
+fn ra {
+  ranger
+}
+
+fn lg {
+  lazygit
+}
+
+var pnpm_home = ~/.local/share/pnpm/
+var user_local_path = ~/.local/bin
+var user_scripts = ~/scritps/
+
+set paths = [ $pnpm_home $user_local_path $user_scripts $@paths ]
