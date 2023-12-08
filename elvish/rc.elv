@@ -55,3 +55,8 @@ use github.com/zzamboni/elvish-completions/ssh
   $b Ctrl-N $edit:history:down-or-quit~
   $b Ctrl-P $edit:history:up~
 }
+
+fn f {
+  var data = (fd --type directory | fzf)
+  cd $data
+}
