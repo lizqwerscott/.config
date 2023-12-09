@@ -1,3 +1,8 @@
+use epm
+
+epm:install github.com/zzamboni/elvish-modules
+epm:install github.com/zzamboni/elvish-completions
+
 # package
 use github.com/zzamboni/elvish-modules/alias
 use github.com/zzamboni/elvish-completions/builtins
@@ -63,6 +68,10 @@ fn f {
 
 fn ls {|@args|
   exa $@args
+}
+
+fn ll {|@args|
+  exa -lh $@args
 }
 
 fn ra {
