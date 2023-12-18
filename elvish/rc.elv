@@ -82,6 +82,10 @@ fn lg {
   lazygit
 }
 
+fn pwget {|@args|
+  proxychains wget $@args
+}
+
 var pnpm_home = ~/.local/share/pnpm/
 var user_local_path = ~/.local/bin
 var user_scripts = ~/scritps/
