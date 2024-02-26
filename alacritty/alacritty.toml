@@ -1,0 +1,17 @@
+# 指定 Alacritty 启动时使用 Fish Shell
+# [shell]
+#   program = "/usr/bin/elvish"
+
+# 不指定 TERM 会导致一些旧机器通过 ssh 连接时无法正常工作
+[env]
+  TERM = "xterm-256color"
+
+[window]
+    opacity = 0.85
+    blur = true
+    decorations = "None"
+    startup_mode = "Maximized"
+    # decorations: None
+[font]
+    normal = { family = "Source Code Pro", style = "Regular" }
+    size = 19
