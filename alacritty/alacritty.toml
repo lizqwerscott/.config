@@ -9,7 +9,7 @@
 [window]
     opacity = 0.85
     blur = true
-    decorations = "None"
+    # decorations = "None"
     startup_mode = "Maximized"
     # decorations: None
 [font]

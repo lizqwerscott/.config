@@ -1,0 +1,11 @@
+keybinds {
+    // keybinds are divided into modes
+    normal {
+        // bind instructions can include one or more keys (both keys will be bound separately)
+        // bind keys can include one or more actions (all actions will be performed with no sequential guarantees)
+        unbind "Ctrl n" // unbind in all modes
+        bind "Ctrl m" { SwitchToMode "resize"; }
+        unbind "Ctrl p" // unbind in all modes
+        bind "Ctrl u" { SwitchToMode "pane"; }
+    }
+}
