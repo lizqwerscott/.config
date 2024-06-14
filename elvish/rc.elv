@@ -1,15 +1,18 @@
 use epm
 
-epm:install github.com/zzamboni/elvish-modules
-epm:install github.com/zzamboni/elvish-completions
+epm:install &silent-if-installed=$true github.com/zzamboni/elvish-modules
+epm:install &silent-if-installed=$true github.com/muesli/elvish-libs
 
 # package
-use github.com/zzamboni/elvish-modules/alias
-use github.com/zzamboni/elvish-completions/builtins
-use github.com/zzamboni/elvish-completions/dd
-use github.com/zzamboni/elvish-completions/git
-use github.com/zzamboni/elvish-completions/ssh
 
+# theme
+## startship
+eval (starship init elvish)
+
+# completions
+## carapace-bin
+set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense' # optional
+eval (carapace _carapace|slurp)
 
 # keybinding
 {
@@ -66,12 +69,13 @@ fn f {
   cd $data
 }
 
+# utils function
 fn ls {|@args|
-  exa $@args
+  eza --icons=auto --hyperlink --color=always --color-scale=all --color-scale-mode=gradient --git --git-repos $@args
 }
 
 fn ll {|@args|
-  exa -lh $@args
+  ls -lh $@args
 }
 
 fn ra {
@@ -84,6 +88,17 @@ fn lg {
 
 fn pwget {|@args|
   proxychains wget $@args
+}
+
+fn ff {|@args|
+  var tmp = (mktemp -t "yazi-cwd.XXXXX")
+  yazi $@args --cwd-file=$tmp
+  var cwd = (cat $tmp)
+  echo $cwd
+  if (and (not (eq cwd "")) (not (eq cwd $pwd)))  {
+    cd $cwd
+  }
+  rm -f $tmp
 }
 
 var pnpm_home = ~/.local/share/pnpm/
