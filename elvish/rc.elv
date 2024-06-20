@@ -28,7 +28,7 @@ fn f {
 
 # utils function
 fn ls {|@args|
-  eza --icons=auto --hyperlink --color=always --color-scale=all --color-scale-mode=gradient --git --git-repos $@args
+  eza --icons=auto --color=always --color-scale=all --color-scale-mode=gradient --git --git-repos $@args
 }
 
 fn ll {|@args|
