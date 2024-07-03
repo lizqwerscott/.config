@@ -15,3 +15,17 @@
 [font]
     normal = { family = "Source Code Pro", style = "Regular" }
     size = 19
+
+[shell]
+    program = "/usr/bin/elvish"
+
+# 鼠标配置
+[mouse]
+  # 点击配置
+  #
+  # 双击和三击的判定等待时间，数值越小，需要快速的双击才能判定为双击操作
+  # double_click: { threshold: 300 }
+  # triple_click: { threshold: 300 }
+
+  # 打字的时候临时隐藏鼠标
+  hide_when_typing = true
