@@ -8,6 +8,8 @@ epm:install &silent-if-installed=$true github.com/muesli/elvish-libs
 epm:install &silent-if-installed=$true github.com/gergelyk/elvish-libs
 # package
 
+use git
+
 # theme
 ## startship
 # eval (starship init elvish)
@@ -45,38 +47,27 @@ fn prompt-pwd {
 }
 
 # utility functions
-# repo status functions
-fn branch {
-  git rev-parse --abbrev-ref HEAD
-}
-
-fn commit_id {
-  put (git rev-parse HEAD)
-}
-
-fn is_git_repo {
-  try {
-    eq (git rev-parse --is-inside-work-tree 2>/dev/null) 'true'
-  } catch e {
-    put $false
-  }
-}
-
 set edit:prompt = {
   put '╭─'
   -colorized 'Ciallo～(∠・ω< )⌒☆  ' green
   -colorized (str:join '' [ (whoami) '@' (uname -n) ]) blue
   put ' in '
   -colorized (prompt-pwd) yellow
-  if (is_git_repo) {
+  if (git:is_git_repo) {
     put ' on '
-    put (-colorized (branch) blue)
-    if (str:contains (echo (git status)) 'working tree clean') {
+    put (-colorized (git:branch) blue)
+    if (git:is_clean_workspace) {
     } else {
       put (-colorized '@m' red)
     }
     put '('
-    put (-colorized (put (commit_id)[0..8]) red)
+    if (git:is_clean_workspace) {
+      put (-colorized (put (git:commit_id)[0..8]) green)
+
+    } else {
+      put (-colorized (put (git:commit_id)[0..8]) red)
+
+    }
     put ')'
   } else {
   }
