@@ -10,7 +10,8 @@ fn commit_id {
 
 fn is_git_repo {
   try {
-    eq (git rev-parse --is-inside-work-tree 2>/dev/null) 'true'
+    and (eq (git rev-parse --is-inside-work-tree 2>/dev/null) 'true')
+        (eq (git rev-parse HEAD 2>/dev/null) 'true')
   } catch e {
     put $false
   }
