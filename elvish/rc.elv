@@ -140,9 +140,10 @@ fn ciallo {|n|
 
 var pnpm_home = ~/.local/share/pnpm/
 var user_local_path = ~/.local/bin
-var user_scripts = ~/scritps/
+var user_scripts = ~/scripts/
+var haskell_path = ~/.ghcup/bin/
 
-set paths = [ $pnpm_home $user_local_path $user_scripts $@paths ]
+set paths = [ $pnpm_home $user_local_path $user_scripts $haskell_path $@paths ]
 
 # env
 use github.com/gergelyk/elvish-libs/python
