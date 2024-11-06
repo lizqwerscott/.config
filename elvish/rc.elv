@@ -52,7 +52,7 @@ set edit:prompt = {
   -colorized 'Ciallo～(∠・ω< )⌒☆  ' green
   -colorized (str:join '' [ (whoami) '@' (uname -n) ]) blue
   put ' in '
-  -colorized (prompt-pwd) yellow
+  -colorized (tilde-abbr $pwd) yellow
   if (git:is_git_repo) {
     put ' on '
     put (-colorized (git:branch) blue)
@@ -142,8 +142,11 @@ var pnpm_home = ~/.local/share/pnpm/
 var user_local_path = ~/.local/bin
 var user_scripts = ~/scripts/
 var haskell_path = ~/.ghcup/bin/
+var cargo_path = ~/.cargo/bin/
+var go_path = ~/go/bin
+var dev_path = ~/.dev-env/bin/
 
-set paths = [ $pnpm_home $user_local_path $user_scripts $haskell_path $@paths ]
+set paths = [ $pnpm_home $user_local_path $user_scripts $haskell_path $cargo_path $go_path $dev_path $@paths ]
 
 # env
 use github.com/gergelyk/elvish-libs/python
