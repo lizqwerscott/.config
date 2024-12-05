@@ -16,8 +16,8 @@
     normal = { family = "Source Code Pro", style = "Regular" }
     size = 19
 
-[shell]
-    program = "/usr/bin/elvish"
+[terminal]
+    shell = "/usr/bin/elvish"
 
 # 鼠标配置
 [mouse]
