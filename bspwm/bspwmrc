@@ -4,6 +4,9 @@
 xrandr --output DP-2 --mode 3840x2160 --rate 160 --primary
 xrandr --output DP-4 --mode 2560x1440 --rate 144 --left-of DP-2
 
+# xorg dpms config
+xset dpms 0 0 0
+
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 bspc wm -O DP-2 DP-4
@@ -33,7 +36,6 @@ wmname LG3D
 exec picom &
 exec fcitx5 & # 输入法
 exec dunst -conf $HOME/.config/dunst/dunstrc & # 通知程序
-exec flameshot & # 截图程序
 exec browserpass & # 启动浏览器 pass
 
 #/home/lizqwer/scripts/dwm/background.sh &
