@@ -11,14 +11,29 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 
 bspc wm -O DP-2 DP-4
 bspc monitor DP-2 -d Editor Terminal Terminal2
-bspc monitor DP-4 -d Browser QQ 6 7 8 9 0
+bspc monitor DP-4 -d Browser QQ 6 7 8 9
 
-bspc config border_width         2
-bspc config window_gap          12
+bspc config border_width        2
+bspc config window_gap          5
 
-bspc config split_ratio          0.52
+bspc config split_ratio          0.53
+bspc config single_monocle       true
+
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
+bspc config automatic_scheme          longest_side
+bspc config initial_polarity          second_child
+bspc config removal_adjustment        true
+
+bspc config focus_follows_pointer     true
+bspc config pointer_follows_focus     false
+bspc config pointer_follows_monitor   true
+bspc config pointer_motion_interval   7
+bspc config pointer_modifier          mod4
+bspc config pointer_action1           move
+bspc config pointer_action2           resize_side
+bspc config pointer_action3           resize_corner
+
 
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a Chromium desktop='^2'
@@ -29,13 +44,18 @@ bspc rule -a firefox desktop='^4'
 bspc rule -a flameshot state=floating focus=off
 
 # polybar
-~/.config/polybar/launch_polybar.sh
+"$HOME"/.config/polybar/launch_polybar.sh
 
 wmname LG3D
 
-exec picom &
-exec fcitx5 & # 输入法
-exec dunst -conf $HOME/.config/dunst/dunstrc & # 通知程序
-exec browserpass & # 启动浏览器 pass
+# Launch picom
+exec picom --config "${HOME}"/.config/bspwm/config/picom/picom.conf &
 
-#/home/lizqwer/scripts/dwm/background.sh &
+exec fcitx5 & # 输入法
+# exec dunst -conf $HOME/.config/dunst/dunstrc & # 通知程序
+exec dunst -conf "$HOME"/.config/bspwm/config/dunst/dunstrc & # 通知程序
+exec browserpass & # 启动浏览器 pass
+exec nm-applet &
+
+# /home/lizqwer/scripts/dwm/background.sh &
+"$HOME"/.config/bspwm/scripts/AutoWall &

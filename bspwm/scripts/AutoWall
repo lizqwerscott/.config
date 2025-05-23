@@ -1,0 +1,14 @@
+#!/bin/bash
+
+wall_path="$HOME/Videos/wallpaper_temp/"
+
+while true; do
+    for file in "$wall_path"/*; do
+        if [[ -f $file ]]; then
+            file_name=$(basename "$file")
+            $HOME/.config/bspwm/scripts/AnimatedWall --stop
+            $HOME/.config/bspwm/scripts/AnimatedWall --start "$file"
+            sleep 30
+        fi
+    done
+done
