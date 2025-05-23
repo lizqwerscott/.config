@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wallpaperplay mute /home/lizqwer/Videos/wallpapers/ /home/lizqwer/Videos/wallpaper_temp/ &
+wallpaperplay mute /home/lizqwer/Videos/wallpapers/ /home/lizqwer/Videos/wallpaper_temp/
 wall_path="$HOME/Videos/wallpaper_temp/"
 
 while true; do
