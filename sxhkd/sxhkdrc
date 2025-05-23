@@ -119,7 +119,7 @@ super + ctrl + shift + space
 # move/resize
 #
 
-super + shift + {h,j,k,l}
+super + ctrl + shift + {h,j,k,l}
 	bspc node -z {left -20 0,top 0 20,top 0 -20,left 20 0}
 
 # # expand a window by moving one of its side outward
