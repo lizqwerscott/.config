@@ -11,7 +11,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 
 bspc wm -O DP-2 DP-4
 bspc monitor DP-2 -d Editor Terminal Terminal2
-bspc monitor DP-4 -d Browser QQ 6 7 8 9
+bspc monitor DP-4 -d Browser QQ 6 7 8
 
 bspc config border_width        2
 bspc config window_gap          5
