@@ -1,6 +1,7 @@
 #!/bin/bash
 
 sudo pacman -Syu &&
+echo "Install base config" &&
 # base system config
 sudo pacman -S ntfs-3g &&
 
@@ -8,6 +9,7 @@ sudo pacman -S archlinuxcn-keyring && # cn 源中的签名（archlinuxcn-keyring
 sudo pacman -S yay && # yay 命令可以让用户安装 AUR 中的软件（yay 在 archlinuxcn）
 
 # base desktop tools
+echo "Install desktop tools" &&
 sudo pacman -S xorg bspwm sxhkd polybar picom dunst xdg-desktop-portal networkmanager network-manager-applet &&
 # 壁纸
 sudo pacmans -S mpv xwinwrap feh &&
@@ -16,17 +18,18 @@ sudo flameshot maim xclip kitty rofi &&
 
 sudo pacman -S firefox vim emacs &&
 
+# input method
+sudo pacman -S fcitx5 fcitx5-im &&# 输入法基础包组
+sudo pacman -S fcitx5-chinese-addons && # 官方中文输入引擎
+
+# nvidia
+sudo pacman -S nvidia nvidia-utils nvidia-prime &&
+
+echo "Install font packages" &&
 # install font
 yay -S adobe-source-code-pro-font adobe-source-han-serif-cn-fonts ttf-lxgw-neo-xihei-screen-full ttf-lxgw-wenkai-screen wqy-zenhei ttf-jetbrains-mono &&
 # 安装谷歌开源字体及表情
 yay -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra &&
-
-# input method
-sudo pacman -S fcitx5 fcitx5-im # 输入法基础包组
-sudo pacman -S fcitx5-chinese-addons # 官方中文输入引擎
-
-# nvidia
-sudo pacman -S nvidia nvidia-utils nvidia-prime &&
 
 # clash
 yay -S clash-verge-rev-bin
