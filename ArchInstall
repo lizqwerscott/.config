@@ -14,7 +14,7 @@ sudo pacman -S xorg xorg-xinit bspwm sxhkd polybar picom dunst xdg-desktop-porta
 # 壁纸
 sudo pacman -S mpv xwinwrap feh &&
 # 截图和终端
-sudo flameshot maim xclip kitty rofi &&
+sudo pacman -S flameshot maim xclip kitty rofi &&
 
 sudo pacman -S firefox vim emacs &&
 
