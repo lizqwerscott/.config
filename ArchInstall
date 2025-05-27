@@ -19,7 +19,7 @@ sudo flameshot maim xclip kitty rofi &&
 sudo pacman -S firefox vim emacs &&
 
 # input method
-sudo pacman -S fcitx5 fcitx5-im &&# 输入法基础包组
+sudo pacman -S fcitx5 &&# 输入法基础包组
 sudo pacman -S fcitx5-chinese-addons && # 官方中文输入引擎
 
 # nvidia
