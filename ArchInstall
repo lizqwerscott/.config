@@ -12,7 +12,7 @@ sudo pacman -S yay && # yay 命令可以让用户安装 AUR 中的软件（yay �
 echo "Install desktop tools" &&
 sudo pacman -S xorg xorg-xinit bspwm sxhkd polybar picom dunst xdg-desktop-portal networkmanager network-manager-applet &&
 # 壁纸
-sudo pacmans -S mpv xwinwrap feh &&
+sudo pacman -S mpv xwinwrap feh &&
 # 截图和终端
 sudo flameshot maim xclip kitty rofi &&
 
