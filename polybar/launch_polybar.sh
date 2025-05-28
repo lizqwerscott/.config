@@ -10,16 +10,16 @@ if type "xrandr" >/dev/null; then
 
   # 在主显示器启动 main bar
   if [ -n "$PRIMARY" ]; then
-    MONITOR=$PRIMARY polybar main &
+    MONITOR=$PRIMARY polybar --reload main &
     echo "主显示器 $PRIMARY 启动 main bar"
   fi
 
   # 在第二显示器启动 secondary bar（如果存在且不是主显示器）
   if [ -n "$SECONDARY" ] && [ "$SECONDARY" != "$PRIMARY" ]; then
-    MONITOR=$SECONDARY polybar secondary &
+    MONITOR=$SECONDARY polybar --reload secondary &
     echo "第二显示器 $SECONDARY 启动 secondary bar"
   fi
 else
   # 如果没有 xrandr，回退到单显示器模式
-  polybar main &
+  polybar --reload main &
 fi
