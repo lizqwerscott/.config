@@ -21,9 +21,17 @@ sudo pacman -S firefox vim emacs &&
 # input method
 sudo pacman -S fcitx5 &&# 输入法基础包组
 sudo pacman -S fcitx5-chinese-addons && # 官方中文输入引擎
+sudo pacman -S fcitx5-gtk fcitx5-qt &&
+sudo pacman -S fcitx5-configtool &&
+
+# pulseaudio
+ya -S pulseaudio pavucontrol &&
+
+# mount
+sudo pacman -S udisk2 udiskie
 
 # nvidia
-sudo pacman -S nvidia nvidia-utils nvidia-prime &&
+sudo pacman -S nvidia nvidia-settings nvidia-utils nvidia-prime &&
 
 echo "Install font packages" &&
 # install font
