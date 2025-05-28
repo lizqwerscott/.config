@@ -42,6 +42,7 @@ bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a firefox desktop='^4'
 bspc rule -a flameshot state=floating focus=off
+bspc rule -a pavucontrol state=floating
 
 # polybar
 "$HOME"/.config/polybar/launch_polybar.sh
@@ -56,6 +57,7 @@ exec fcitx5 & # 输入法
 exec dunst -conf "$HOME"/.config/bspwm/config/dunst/dunstrc & # 通知程序
 exec browserpass & # 启动浏览器 pass
 exec nm-applet &
+exec udiskie --tray &
 
 # /home/lizqwer/scripts/dwm/background.sh &
 "$HOME"/.config/bspwm/scripts/AutoWall &
