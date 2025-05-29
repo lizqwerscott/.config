@@ -58,6 +58,7 @@ exec dunst -conf "$HOME"/.config/bspwm/config/dunst/dunstrc & # 通知程序
 exec browserpass & # 启动浏览器 pass
 exec nm-applet &
 exec udiskie --tray &
+exec flameshot &
 
 # /home/lizqwer/scripts/dwm/background.sh &
 "$HOME"/.config/bspwm/scripts/AutoWall &

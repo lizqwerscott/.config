@@ -10,8 +10,7 @@ super + Return
     rofi -show combi -combi-modes window,drun,run,filebrowser -modes combi
 
 super + shift + s
-    maim -s | xclip -selection clipboard -t image/png
-   # flameshot gui
+    env QT_AUTO_SCREEN_SCALE_FACTOR=1.5 QT_SCREEN_SCALE_FACTORS="" flameshot gui
 
 # make sxhkd reload its configuration files:
 super + Escape
