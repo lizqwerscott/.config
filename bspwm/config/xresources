@@ -1,0 +1,23 @@
+Xft.autohint: 0
+
+Xft.lcdfilter:  lcddefault
+
+!看个人喜好，如果是1080(含)以下屏幕，
+!建议改为hintslight或者hintnone,
+!这样不会出现歪歪扭扭的字，但是字体
+!会显得稍有些模糊。
+Xft.hintstyle:  hintfull
+
+! 开启字体自带的hinting
+Xft.hinting: 1
+
+! 开启反锯齿
+Xft.antialias: 1
+Xft.rgba: rgb
+
+! 1080以下不用设置，默认是96，推荐设置：
+! 150% - 144
+! 175% - 168
+! 200% - 192
+Xft.dpi: 96
+Emacs.useXIM: false

@@ -62,3 +62,5 @@ exec flameshot &
 
 # /home/lizqwer/scripts/dwm/background.sh &
 "$HOME"/.config/bspwm/scripts/AutoWall &
+
+xrdb "${HOME}"/.config/bspwm/config/xresources
