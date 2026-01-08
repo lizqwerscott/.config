@@ -1,11 +1,17 @@
 #! /bin/sh
 
+export XDG_CURRENT_DESKTOP=bspwm
+
 # monitor
 xrandr --output DP-2 --mode 3840x2160 --rate 160 --primary
 xrandr --output DP-4 --mode 2560x1440 --rate 144 --left-of DP-2
 
 # xorg dpms config
 xset dpms 0 0 0
+# 禁用屏幕自动关闭
+xset -dpms
+xset s off
+xset s noblank
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
@@ -43,25 +49,25 @@ bspc rule -a Screenkey manage=off
 bspc rule -a firefox desktop='^4'
 bspc rule -a flameshot state=floating focus=off
 bspc rule -a pavucontrol state=floating
+bspc rule -a QQ desktop='^5'
 bspc rule -a discord desktop='^6'
 
 # polybar
-"$HOME"/.config/polybar/launch_polybar.sh
+~/.config/polybar/launch_polybar.sh
 
 wmname LG3D
 
 # Launch picom
-exec picom --config "${HOME}"/.config/bspwm/config/picom/picom.conf &
+exec picom --config ~/.config/bspwm/config/picom/picom.conf &
 
 exec fcitx5 & # 输入法
-# exec dunst -conf $HOME/.config/dunst/dunstrc & # 通知程序
-exec dunst -conf "$HOME"/.config/bspwm/config/dunst/dunstrc & # 通知程序
+exec dunst -conf ~/.config/bspwm/config/dunst/dunstrc & # 通知程序
 exec browserpass & # 启动浏览器 pass
 exec nm-applet &
 exec udiskie --tray &
 exec flameshot &
 
-# /home/lizqwer/scripts/dwm/background.sh &
-"$HOME"/.config/bspwm/scripts/AutoWall &
+# background
+~/.config/bspwm/scripts/background.sh &
 
-xrdb "${HOME}"/.config/bspwm/config/xresources
+xrdb ~/.config/bspwm/config/xresources
