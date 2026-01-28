@@ -9,6 +9,7 @@ epm:install &silent-if-installed=$true github.com/gergelyk/elvish-libs
 # package
 
 use git
+use direnv
 
 # theme
 ## startship
