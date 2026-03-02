@@ -137,6 +137,24 @@ fn ciallo {|n|
   }
 }
 
+fn cpwd {
+  if (has-external pbcopy) {
+    print $pwd | pbcopy
+  } elif (has-external wl-copy) {
+    print $pwd | wl-copy
+  } elif (has-external xclip) {
+    print $pwd | xclip -selection clipboard
+  } elif (has-external xsel) {
+    print $pwd | xsel -b
+  } else {
+    echo "Error: No clipboard tool found. Please install:"
+    echo "  - macOS: pbcopy (built-in)"
+    echo "  - Linux: xclip or xsel (e.g., sudo apt install xclip)"
+    return
+  }
+  echo 'pwd copied to clipboard'
+}
+
 # path
 
 var pnpm_home = ~/.local/share/pnpm/
