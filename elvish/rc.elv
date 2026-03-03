@@ -2,6 +2,8 @@ use epm
 use str
 use re
 use platform
+use path
+use os
 
 epm:install &silent-if-installed=$true github.com/zzamboni/elvish-modules
 epm:install &silent-if-installed=$true github.com/muesli/elvish-libs
@@ -137,22 +139,47 @@ fn ciallo {|n|
   }
 }
 
-fn cpwd {
+fn cpwd {|@args|
+  var target_path
+
+  if (== (count $args) 0) {
+    set target_path = $pwd
+  } else {
+    var arg = $args[0]
+
+    if (os:is-dir $arg) {
+      set target_path = (path:abs $arg)
+    } elif (os:is-regular $arg) {
+      set target_path = (path:abs $arg)
+    } else {
+      if (str:has-prefix $arg "/") {
+        set target_path = $arg
+      } else {
+        set target_path = (path:abs $arg)
+      }
+    }
+  }
+
   if (has-external pbcopy) {
-    print $pwd | pbcopy
+    print $target_path | pbcopy
   } elif (has-external wl-copy) {
-    print $pwd | wl-copy
-  } elif (has-external xclip) {
-    print $pwd | xclip -selection clipboard
+    print $target_path | wl-copy
   } elif (has-external xsel) {
-    print $pwd | xsel -b
+    print $target_path | xsel -b
+  } elif (has-external xclip) {
+    print $target_path | xclip -selection clipboard
   } else {
     echo "Error: No clipboard tool found. Please install:"
     echo "  - macOS: pbcopy (built-in)"
     echo "  - Linux: xclip or xsel (e.g., sudo apt install xclip)"
-    return
+    return 1
   }
-  echo 'pwd copied to clipboard'
+
+  if (== (count $args) 0) {
+    echo 'Current directory path copied to clipboard'
+  } else {
+    printf "Path copied to clipboard: %s\n" $target_path
+  }
 }
 
 # path
