@@ -182,6 +182,11 @@ fn cpwd {|@args|
   }
 }
 
+fn mkcd {|dir|
+    mkdir -p $dir
+    cd $dir
+}
+
 # path
 
 var pnpm_home = ~/.local/share/pnpm/
