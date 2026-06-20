@@ -1,43 +1,204 @@
 #!/bin/bash
 
+set -e
+
+# ============================================
+# Helper
+# ============================================
+info()  { echo -e "\n\033[1;34m==>\033[0m \033[1m$1\033[0m"; }
+ask()   { echo -en "\033[1;33m??\033[0m $1 [Y/n] "; read -r; [[ -z "$REPLY" || "$REPLY" =~ ^[Yy]$ ]]; }
+done_section() { echo -e "  \033[1;32m✓\033[0m Done.\n"; }
+
+# Ask whether to continue to next component (used in all-install mode)
+ask_next() {
+  local name="$1"
+  echo -en "\033[1;33m??\033[0m 继续安装 \033[1m$name\033[0m？[Y/n] "
+  read -r
+  if [[ -n "$REPLY" && ! "$REPLY" =~ ^[Yy]$ ]]; then
+    echo -e "  \033[1;33m跳过 $name。\033[0m\n"
+    return 1
+  fi
+  return 0
+}
+
+# ============================================
+# 0. System update & base config
+# ============================================
+install_base() {
+  info "System update and base config"
+  sudo pacman -Syu
+  sudo pacman -S --noconfirm ntfs-3g
+  sudo pacman -S --noconfirm archlinuxcn-keyring
+  sudo pacman -S --noconfirm yay
+  done_section
+}
+
+# ============================================
+# 1. Desktop environment + wallpaper + screenshot
+# ============================================
+install_desktop_env() {
+  info "Desktop environment (Xorg + bspwm + wallpaper + screenshot)"
+  sudo pacman -S --noconfirm \
+    xorg bspwm sxhkd polybar picom dunst \
+    xdg-desktop-portal networkmanager network-manager-applet \
+    mpv xwinwrap feh flameshot maim xclip
+  done_section
+}
+
+# ============================================
+# 2. Terminal & launcher & browser
+# ============================================
+install_term_browser() {
+  info "Terminal, launcher & browser"
+  sudo pacman -S --noconfirm kitty ghostty rofi firefox
+  done_section
+}
+
+# ============================================
+# 3. Input method (Fcitx5)
+# ============================================
+install_input_method() {
+  info "Input method (Fcitx5)"
+  sudo pacman -S --noconfirm \
+    fcitx5 fcitx5-chinese-addons \
+    fcitx5-gtk fcitx5-qt fcitx5-configtool
+  done_section
+}
+
+# ============================================
+# 4. Audio (PulseAudio)
+# ============================================
+install_audio() {
+  info "PulseAudio"
+  yay -S --noconfirm pulseaudio pavucontrol
+  done_section
+}
+
+# ============================================
+# 5. Mount utilities
+# ============================================
+install_mount() {
+  info "Mount utilities"
+  sudo pacman -S --noconfirm udisks2 udiskie
+  done_section
+}
+
+# ============================================
+# 6. NVIDIA drivers
+# ============================================
+install_nvidia() {
+  info "NVIDIA drivers"
+  sudo pacman -S --noconfirm nvidia nvidia-settings nvidia-utils nvidia-prime
+  done_section
+}
+
+# ============================================
+# 7. Fonts
+# ============================================
+install_fonts() {
+  info "Fonts"
+  yay -S --noconfirm \
+    adobe-source-code-pro-font \
+    adobe-source-han-serif-cn-fonts \
+    ttf-lxgw-neo-xihei-screen-full \
+    ttf-lxgw-wenkai-screen \
+    wqy-zenhei \
+    ttf-jetbrains-mono \
+    noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+  done_section
+}
+
+# ============================================
+# 8. Optional: Clash
+# ============================================
+install_clash() {
+  info "Clash (AUR)"
+  yay -S --noconfirm clash-verge-rev-bin
+  done_section
+}
+
+# ============================================
+# 9. Hyprland
+# ============================================
+install_hyprland() {
+  info "Hyprland (Wayland compositor)"
+  sudo pacman -S --noconfirm \
+    hyprland waybar hyprpaper \
+    swaync \
+    xdg-desktop-portal-hyprland
+  done_section
+}
+
+# ============================================
+# Desktop environment chooser
+# ============================================
+choose_and_install_desktop() {
+  echo -e "\033[1;36m--- 选择桌面环境 ---\033[0m"
+  echo "  1) Hyprland (Wayland)"
+  echo "  2) Xorg + bspwm"
+  echo -en "\033[1;33m??\033[0m 请输入数字 [1-2] (默认: 1): "
+  read -r de_choice
+  case "${de_choice:-1}" in
+    1) install_hyprland ;;
+    2) install_desktop_env ;;
+    *) install_hyprland ;;
+  esac
+}
+
+# ============================================
+# Main menu — install_base 始终执行
+# ============================================
 sudo pacman -Syu &&
-echo "Install base config" &&
-# base system config
-sudo pacman -S ntfs-3g &&
 
-sudo pacman -S archlinuxcn-keyring && # cn 源中的签名（archlinuxcn-keyring 在 archlinuxcn）
-sudo pacman -S yay && # yay 命令可以让用户安装 AUR 中的软件（yay 在 archlinuxcn）
+echo -e "\033[1;36m═══════════════════════════════════════\033[0m"
+echo -e "\033[1;36m      Arch Linux 安装选择菜单\033[0m"
+echo -e "\033[1;36m═══════════════════════════════════════\033[0m"
+echo ""
+echo "  0) 全部安装 (依次安装所有组件)"
+echo "  1) 桌面环境 (选择 Hyprland 或 Xorg/bspwm)"
+echo "  2) 终端/启动器/浏览器 (kitty, rofi, firefox)"
+echo "  3) 输入法 (Fcitx5)"
+echo "  4) 音频 (PulseAudio)"
+echo "  5) 挂载工具 (udisks2, udiskie)"
+echo "  6) NVIDIA 驱动"
+echo "  7) 字体"
+echo "  8) Clash"
+echo "  9) 退出"
+echo ""
+echo -en "\033[1;33m??\033[0m 请输入数字 (默认: 0): "
+read -r choice
 
-# base desktop tools
-echo "Install desktop tools" &&
-sudo pacman -S xorg bspwm sxhkd polybar picom dunst xdg-desktop-portal networkmanager network-manager-applet &&
-# 壁纸
-sudo pacman -S mpv xwinwrap feh &&
-# 截图和终端
-sudo pacman -S flameshot maim xclip kitty rofi &&
+echo ""
+case "${choice:-0}" in
+  0)
+    install_base
+    choose_and_install_desktop
+    ask_next "终端/启动器/浏览器" && install_term_browser
+    ask_next "输入法 (Fcitx5)" && install_input_method
+    ask_next "音频 (PulseAudio)" && install_audio
+    ask_next "挂载工具" && install_mount
+    ask_next "NVIDIA 驱动" && install_nvidia
+    ask_next "字体" && install_fonts
+    ask_next "Clash" && install_clash
+    ;;
+  1) choose_and_install_desktop ;;
+  2) install_term_browser ;;
+  3) install_input_method ;;
+  4) install_audio ;;
+  5) install_mount ;;
+  6) install_nvidia ;;
+  7) install_fonts ;;
+  8) install_clash ;;
+  9)
+    echo -e "\033[1;33m退出安装。\033[0m"
+    exit 0
+    ;;
+  *)
+    echo -e "\033[1;31m无效输入，退出。\033[0m"
+    exit 1
+    ;;
+esac
 
-sudo pacman -S firefox &&
-
-# input method
-sudo pacman -S fcitx5 &&# 输入法基础包组
-sudo pacman -S fcitx5-chinese-addons && # 官方中文输入引擎
-sudo pacman -S fcitx5-gtk fcitx5-qt &&
-sudo pacman -S fcitx5-configtool &&
-
-# pulseaudio
-yay -S pulseaudio pavucontrol &&
-
-# mount
-sudo pacman -S udisks2 udiskie &&
-
-# nvidia
-sudo pacman -S nvidia nvidia-settings nvidia-utils nvidia-prime &&
-
-echo "Install font packages" &&
-# install font
-yay -S adobe-source-code-pro-font adobe-source-han-serif-cn-fonts ttf-lxgw-neo-xihei-screen-full ttf-lxgw-wenkai-screen wqy-zenhei ttf-jetbrains-mono &&
-# 安装谷歌开源字体及表情
-yay -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
-
-# clash
-#yay -S clash-verge-rev-bin
+echo -e "\n\033[1;32m═══════════════════════════════════════\033[0m"
+echo -e "\033[1;32m  安装完成！\033[0m"
+echo -e "\033[1;32m═══════════════════════════════════════\033[0m"
