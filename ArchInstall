@@ -26,10 +26,8 @@ ask_next() {
 # ============================================
 install_base() {
   info "System update and base config"
-  sudo pacman -Syu
-  sudo pacman -S --noconfirm ntfs-3g
-  sudo pacman -S --noconfirm archlinuxcn-keyring
-  sudo pacman -S --noconfirm yay
+  sudo pacman -Syu &&
+  sudo pacman -S --noconfirm pacman-contrib archlinuxcn-keyring yay ntfs-3g
   done_section
 }
 
