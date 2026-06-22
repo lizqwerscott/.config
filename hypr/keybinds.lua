@@ -1,29 +1,36 @@
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
+
 local menu     = "rofi -show combi -combi-modes window,drun,run,filebrowser -modes combi"
 local terminal = "kitty"
 local browser  = "firefox"
+local filemanager  = "thunar" -- dplphin, thunar
+
+-- Quit hyprland
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 
 -- Application launchers
-hl.bind(mainMod .. " + SHIFT + I",      hl.dsp.exec_cmd("emacs"))
-hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + SHIFT + B",      hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + Return",         hl.dsp.exec_cmd(menu))
+
+hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + SHIFT + I",      hl.dsp.exec_cmd("emacs"))
+hl.bind(mainMod .. " + SHIFT + B",      hl.dsp.exec_cmd(browser))
+
+hl.bind(mainMod .. " + E",              hl.dsp.exec_cmd(filemanager))
+hl.bind(mainMod .. " + SHIFT + T",      hl.dsp.exec_cmd(terminal .. " btop"))
 
 -- Window management
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + M",         hl.dsp.exec_cmd("hyprctl dispatch exit"))
-hl.bind(mainMod .. " + E",         hl.dsp.exec_cmd("dolphin"))
 hl.bind(mainMod .. " + S",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F",         hl.dsp.window.fullscreen())
 
 -- Screenshot
 hl.bind(mainMod .. " + CTRL + S",  hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("hyprshot -m window"))
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(terminal .. " btop"))
 
 -- Cycle focus
-hl.bind(mainMod .. " + K", hl.dsp.window.cycle_next({ next = false }))
-hl.bind(mainMod .. " + J", hl.dsp.window.cycle_next())
+hl.bind(mainMod .. " + K",   hl.dsp.window.cycle_next({ next = false }))
+hl.bind(mainMod .. " + J",   hl.dsp.window.cycle_next())
+hl.bind(mainMod .. " + TAB", hl.dsp.focus({ last = true}))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT/CTRL + [0-9]
