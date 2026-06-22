@@ -28,7 +28,7 @@ hl.bind(mainMod .. " + CTRL + S",  hl.dsp.exec_cmd("hyprshot -m region --clipboa
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("hyprshot -m window"))
 
 -- Clipboard
-hl.bind(mainMod .. " + V", hl.dsp_exec_cmd("clipvault list | rofi -dmenu -display-columns 2 | clipvault get | wl-copy"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipvault list | rofi -dmenu -display-columns 2 | clipvault get | wl-copy"))
 
 -- Cycle focus
 hl.bind(mainMod .. " + K",   hl.dsp.window.cycle_next({ next = false }))
