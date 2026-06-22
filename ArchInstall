@@ -125,7 +125,8 @@ install_hyprland() {
   sudo pacman -S --noconfirm \
     hyprland waybar hyprpaper hyprshutdown hyprcursor \
     swaync \
-    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-hyprland \
+    clipvalut
   done_section
 }
 
