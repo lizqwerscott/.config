@@ -12,10 +12,10 @@ done_section() { echo -e "  \033[1;32m✓\033[0m Done.\n"; }
 # Ask whether to continue to next component (used in all-install mode)
 ask_next() {
   local name="$1"
-  echo -en "\033[1;33m??\033[0m 继续安装 \033[1m$name\033[0m？[Y/n] "
+  echo -en "\033[1;33m??\033[0m Continue installing \033[1m$name\033[0m? [Y/n] "
   read -r
   if [[ -n "$REPLY" && ! "$REPLY" =~ ^[Yy]$ ]]; then
-    echo -e "  \033[1;33m跳过 $name。\033[0m\n"
+    echo -e "  \033[1;33mSkipping $name.\033[0m\n"
     return 1
   fi
   return 0
@@ -133,10 +133,10 @@ install_hyprland() {
 # Desktop environment chooser
 # ============================================
 choose_and_install_desktop() {
-  echo -e "\033[1;36m--- 选择桌面环境 ---\033[0m"
+  echo -e "\033[1;36m--- Select Desktop Environment ---\033[0m"
   echo "  1) Hyprland (Wayland)"
   echo "  2) Xorg + bspwm"
-  echo -en "\033[1;33m??\033[0m 请输入数字 [1-2] (默认: 1): "
+  echo -en "\033[1;33m??\033[0m Enter number [1-2] (default: 1): "
   read -r de_choice
   case "${de_choice:-1}" in
     1) install_hyprland ;;
@@ -146,26 +146,26 @@ choose_and_install_desktop() {
 }
 
 # ============================================
-# Main menu — install_base 始终执行
+# Main menu — install_base always runs
 # ============================================
 sudo pacman -Syu &&
 
 echo -e "\033[1;36m═══════════════════════════════════════\033[0m"
-echo -e "\033[1;36m      Arch Linux 安装选择菜单\033[0m"
+echo -e "\033[1;36m      Arch Linux Install Menu\033[0m"
 echo -e "\033[1;36m═══════════════════════════════════════\033[0m"
 echo ""
-echo "  0) 全部安装 (依次安装所有组件)"
-echo "  1) 桌面环境 (选择 Hyprland 或 Xorg/bspwm)"
-echo "  2) 终端/启动器/浏览器 (kitty, rofi, firefox)"
-echo "  3) 输入法 (Fcitx5)"
-echo "  4) 音频 (PulseAudio)"
-echo "  5) 挂载工具 (udisks2, udiskie)"
-echo "  6) NVIDIA 驱动"
-echo "  7) 字体"
+echo "  0) Install all (all components in sequence)"
+echo "  1) Desktop environment (Hyprland or Xorg/bspwm)"
+echo "  2) Terminal / Launcher / Browser (kitty, rofi, firefox)"
+echo "  3) Input method (Fcitx5)"
+echo "  4) Audio (PulseAudio)"
+echo "  5) Mount utilities (udisks2, udiskie)"
+echo "  6) NVIDIA driver"
+echo "  7) Fonts"
 echo "  8) Clash"
-echo "  9) 退出"
+echo "  9) Exit"
 echo ""
-echo -en "\033[1;33m??\033[0m 请输入数字 (默认: 0): "
+echo -en "\033[1;33m??\033[0m Enter number (default: 0): "
 read -r choice
 
 echo ""
@@ -173,12 +173,12 @@ case "${choice:-0}" in
   0)
     install_base
     choose_and_install_desktop
-    ask_next "终端/启动器/浏览器" && install_term_browser
-    ask_next "输入法 (Fcitx5)" && install_input_method
-    ask_next "音频 (PulseAudio)" && install_audio
-    ask_next "挂载工具" && install_mount
-    ask_next "NVIDIA 驱动" && install_nvidia
-    ask_next "字体" && install_fonts
+    ask_next "Terminal / Launcher / Browser" && install_term_browser
+    ask_next "Input method (Fcitx5)" && install_input_method
+    ask_next "Audio (PulseAudio)" && install_audio
+    ask_next "Mount utilities" && install_mount
+    ask_next "NVIDIA driver" && install_nvidia
+    ask_next "Fonts" && install_fonts
     ask_next "Clash" && install_clash
     ;;
   1) choose_and_install_desktop ;;
@@ -190,16 +190,16 @@ case "${choice:-0}" in
   7) install_fonts ;;
   8) install_clash ;;
   9)
-    echo -e "\033[1;33m退出安装。\033[0m"
+    echo -e "\033[1;33mExiting installer.\033[0m"
     exit 0
     ;;
   *)
-    echo -e "\033[1;31m无效输入，退出。\033[0m"
+    echo -e "\033[1;31mInvalid input, exiting.\033[0m"
     exit 1
     ;;
 esac
 
 echo -e "\n\033[1;32m═══════════════════════════════════════\033[0m"
-echo -e "\033[1;32m  安装完成！\033[0m"
+echo -e "\033[1;32m  Installation complete!\033[0m"
 echo -e "\033[1;32m═══════════════════════════════════════\033[0m"
 
