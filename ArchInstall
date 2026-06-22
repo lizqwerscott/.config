@@ -123,7 +123,7 @@ install_clash() {
 install_hyprland() {
   info "Hyprland (Wayland compositor)"
   sudo pacman -S --noconfirm \
-    hyprland waybar hyprpaper \
+    hyprland waybar hyprpaper hyprshutdown hyprcursor \
     swaync \
     xdg-desktop-portal-hyprland
   done_section
