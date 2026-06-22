@@ -125,8 +125,7 @@ install_hyprland() {
   sudo pacman -S --noconfirm \
     hyprland waybar hyprpaper hyprshutdown hyprcursor \
     swaync \
-    xdg-desktop-portal-hyprland \
-    clipvalut
+    xdg-desktop-portal-hyprland
   done_section
 }
 
@@ -203,3 +202,4 @@ esac
 echo -e "\n\033[1;32m═══════════════════════════════════════\033[0m"
 echo -e "\033[1;32m  安装完成！\033[0m"
 echo -e "\033[1;32m═══════════════════════════════════════\033[0m"
+
