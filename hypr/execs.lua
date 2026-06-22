@@ -1,5 +1,5 @@
 hl.on("hyprland.start", function ()
-  hl.exec_cmd("~/scripts/checkupdates.sh")
+  hl.exec_cmd("~/.config/scripts/checkupdates.sh")
 
   -- wallpaper, Bar
   -- hl.exec_cmd("~/.config/hypr/scripts/background-video.sh")
