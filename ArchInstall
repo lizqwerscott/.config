@@ -64,11 +64,23 @@ install_input_method() {
 }
 
 # ============================================
-# 4. Audio (PulseAudio)
+# 4. Audio (PipeWire)
 # ============================================
 install_audio() {
-  info "PulseAudio"
-  yay -S --noconfirm pulseaudio pavucontrol
+  info "PipeWire"
+  # Drop the legacy servers first: pulseaudio conflicts with pipewire-pulse and
+  # jack2 conflicts with pipewire-jack. -Rdd skips the dependency check, but
+  # pipewire-jack provides libjack.so and libpulse is left alone, so nothing breaks.
+  systemctl --user disable --now pulseaudio.socket pulseaudio.service 2>/dev/null || true
+  sudo pacman -Rdd --noconfirm pulseaudio jack2 2>/dev/null || true
+
+  sudo pacman -S --needed --noconfirm \
+    pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack \
+    wireplumber pavucontrol
+
+  # Socket-activated user services
+  systemctl --user enable --now pipewire.socket pipewire-pulse.socket
+  systemctl --user enable --now wireplumber.service
   done_section
 }
 
@@ -166,7 +178,7 @@ echo "  0) Install all (all components in sequence)"
 echo "  1) Desktop environment (Hyprland or Xorg/bspwm)"
 echo "  2) Terminal / Launcher / Browser (kitty, rofi, firefox)"
 echo "  3) Input method (Fcitx5)"
-echo "  4) Audio (PulseAudio)"
+echo "  4) Audio (PipeWire)"
 echo "  5) Mount utilities (udisks2, udiskie)"
 echo "  6) File manager & Image viewer (Thunar, nsxiv)"
 echo "  7) NVIDIA driver"
@@ -184,7 +196,7 @@ case "${choice:-0}" in
     choose_and_install_desktop
     ask_next "Terminal / Launcher / Browser" && install_term_browser
     ask_next "Input method (Fcitx5)" && install_input_method
-    ask_next "Audio (PulseAudio)" && install_audio
+    ask_next "Audio (PipeWire)" && install_audio
     ask_next "Mount utilities" && install_mount
     ask_next "File manager & Image viewer" && install_file_manager
     ask_next "NVIDIA driver" && install_nvidia
@@ -200,7 +212,7 @@ case "${choice:-0}" in
   7) install_nvidia ;;
   8) install_fonts ;;
   9) install_clash ;;
-  9)
+  10)
     echo -e "\033[1;33mExiting installer.\033[0m"
     exit 0
     ;;
