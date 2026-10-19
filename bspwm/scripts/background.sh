@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wallpaper_dir=~/Pictures/background/
+wallpaper_dir=~/Pictures/Wallpapers/
 
 while true; do
     feh --recursive --randomize --bg-max ${wallpaper_dir}
